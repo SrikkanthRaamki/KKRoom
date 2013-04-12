@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:context="http://www.springframework.org/schema/context"
+		xmlns:aop="http://www.springframework.org/schema/aop"
+
+
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context-2.5.xsd
+			http://www.springframework.org/schema/aop
+			http://www.springframework.org/schema/aop/spring-aop-2.5.xsd"
+
+		default-autowire="byName">
+	<!-- <aop:aspectj-autoproxy proxy-target-class="false" />
+
+	<bean class="com.boeing.kmapi.common.utils.MultipartResolverDisablingAspect" /> -->
+
+	<!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+	<bean id="sessionHandlingInterceptor" class="com.boeing.kmapi.common.utils.SessionHandlingInterceptor" />
+-->
+	<context:component-scan base-package="tm.component">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	
+
+	<!-- <bean id="defaultAnnotation" class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="customHandlingInterceptor" />
+				<ref bean="sessionHandlingInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="customHandlingInterceptor" class="com.boeing.kmapi.common.utils.CustomHandlingInterceptor" /> -->
+
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/jsp/" />
+		<property name="suffix" value=".jsp" />
+    </bean>
+   <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="1024000000" />
+		<property name="maxInMemorySize" value="1024000000" />
+   </bean>
+	<bean id="TaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="3" />
+		<property name="maxPoolSize" value="10" />
+		<property name="queueCapacity" value="15" />
+	</bean>
+
+	</beans>
